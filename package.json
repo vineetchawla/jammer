@@ -1,0 +1,16 @@
+{
+  "name": "jammer-vineet-chawla",
+  "version": "1.0.0",
+  "description": "challenge",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vineet Chawla",
+  "license": "ISC",
+  "dependencies": {
+    "joi": "^14.3.1",
+    "mongoose": "^5.9.20"
+  }
+}
