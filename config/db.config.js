@@ -1,5 +1,6 @@
 module.exports = {
-  HOST: "localhost",
-  PORT: 27017,
-  DB: "jammer",
+  host: "localhost",
+  port: 27017,
+  db: "jammer",
+  secret: "TopSecret",
 };
