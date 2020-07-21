@@ -16,7 +16,7 @@ const profileSchema = new schema({
     type: "String",
   },
 });
-const Profile = mongoose.model("Instrument", profileSchema);
+const Profile = mongoose.model("Profile", profileSchema);
 
 module.exports = {
   Profile,
