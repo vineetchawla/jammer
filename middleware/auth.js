@@ -4,7 +4,6 @@ const config = require("./../config/db.config");
 
 const auth = async (req, res, next) => {
   const token = req.header("Authorization").replace("Bearer ", "");
-  console.log(token, config.secret);
   const data = jwt.verify(token, config.secret);
   try {
     const user = await User.findOne({ _id: data._id, "tokens.token": token });

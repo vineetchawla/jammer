@@ -6,11 +6,11 @@ const jamSchema = new schema({
   name: {
     type: "String",
   },
-  totalRoles: {
+  totalMembers: {
     type: "Number",
   },
-  bandRoles: {
-    type: "",
+  creator: {
+    type: "String",
   },
 });
 const Jam = mongoose.model("Jam", jamSchema);
