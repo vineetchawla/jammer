@@ -12,6 +12,10 @@ const jamSchema = new schema({
   creator: {
     type: "String",
   },
+  active: {
+    type: "Boolean",
+    default: false,
+  },
 });
 const Jam = mongoose.model("Jam", jamSchema);
 
