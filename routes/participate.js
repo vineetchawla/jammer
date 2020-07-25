@@ -6,29 +6,33 @@ const auth = require("./../middleware/auth");
 const router = express.Router();
 
 //select a jam with profile
-router.put("/", auth, async (req, res) => {
+router.post("/join", auth, async (req, res) => {
   try {
     const user = req.user;
-    const { jamName, profile } = req.body;
-
-    await addUserToJam(jamName, profile);
+    const { name } = req.body;
+    await Jam.updateOne({ name }, { $push: { usersAccepted: user.id } });
     res.send("done");
   } catch (error) {}
 });
 
 // remove user from jam
-router.get("/remove/:jamName", auth, async (req, res) => {
+router.delete("/remove/:jamName", auth, async (req, res) => {
   try {
     const user = req.user;
-    const { jamName } = req.param.jamName;
-    await removeUserFromJam(user, jamName);
+    const name = req.params.jamName;
+    console.log(user.id, name);
+
+    await Jam.updateOne({ name }, { $pull: { usersAccepted: user.id } });
+    res.send("done");
   } catch (err) {}
 });
 
 router.get("/start/:jamName", auth, async (req, res) => {
   try {
-    const user = req.user;
-    const { jamName } = req.param.jamName;
-    await startJam(user, jamName);
+    const name = req.params.jamName;
+    await Jam.updateOne({ name }, { active: true });
+    res.send("done");
   } catch (err) {}
 });
+
+module.exports = router;

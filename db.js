@@ -4,6 +4,7 @@ const dbConfig = require("./config/db.config");
 mongoose
   .connect(`mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`, {
     useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => {

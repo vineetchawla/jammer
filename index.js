@@ -5,6 +5,7 @@ require("./db");
 const userRouter = require("./routes/user");
 const skillRouter = require("./routes/skill");
 const jamRouter = require("./routes/jam");
+const participateRouter = require("./routes/participate");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,6 +18,8 @@ app.get("/", (req, res) => {
 });
 app.use(userRouter);
 app.use("/skill", skillRouter);
+app.use("/jam", jamRouter);
+app.use("/participate", participateRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
