@@ -9,12 +9,13 @@ const router = express.Router();
 
 router.post("/create", auth, async (req, res) => {
   try {
-    const { jamName, numMembers, bandRoles } = req.body;
-    const user = req.user;
-    await Jam.createJam(jamName, numMembers, bandRoles);
-    res.send("Success");
+    const jam = req.body;
+    jam.creator = req.user.id;
+    console.log(jam);
+
+    await Jam.create(jam);
   } catch (error) {
-    res.status(400).send(error);
+    res.send(error);
   }
 });
 
@@ -28,23 +29,25 @@ router.get("/all", auth, async (req, res) => {
   }
 });
 
-// all jams of user, created and participated
+// all jams of a user, created or participated
 router.get("/user", auth, async (req, res) => {
   try {
     const user = req.user;
-    const jam = await Jam.findJamsOfUser(user);
-    res.send(jam);
+    const created = await Jam.find({ creator: user.id });
+    const partricipated = await Jam.find({
+      usersAccepted: { $all: [user.id] },
+    });
+    res.send({ created, partricipated });
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
 // specific jam
-router.get("/:jamName", auth, async (req, res) => {
+router.get("/find/:jamName", auth, async (req, res) => {
   try {
-    const user = req.user;
     const jamName = req.params.jamName;
-    const jam = await Jam.findJam(user, jamName);
+    const jam = await Jam.findOne({ name: jamName });
     res.send(jam);
   } catch (error) {
     res.status(400).send(error);
@@ -54,11 +57,12 @@ router.get("/:jamName", auth, async (req, res) => {
 // delete jam. only creator can delete
 router.delete("/:jamName", auth, async (req, res) => {
   try {
-    const user = req.user;
     const jamName = req.params.jamName;
-    const jam = await Jam.deleteJam(user, jamName);
+    await Jam.deleteOne({ name: jamName });
     res.send("deleted");
   } catch (error) {
     res.status(400).send(error);
   }
 });
+
+module.exports = router;
