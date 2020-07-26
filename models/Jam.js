@@ -18,7 +18,7 @@ const jamSchema = new mongoose.Schema({
     type: "Boolean",
     default: false,
   },
-  instruments: [
+  roles: [
     {
       type: "String",
     },

@@ -1,8 +1,8 @@
 //create jam, requires userid, N number of members, and N Bandroles
 
 const express = require("express");
-const Jam = require("./../models/Jam");
 
+const Jam = require("./../models/Jam");
 const auth = require("./../middleware/auth");
 
 const router = express.Router();
@@ -11,6 +11,7 @@ router.post("/create", auth, async (req, res) => {
   try {
     const jam = req.body;
     jam.creator = req.user.id;
+    jam.usersAccepted = [req.user.id];
 
     await Jam.create(jam);
   } catch (error) {
@@ -57,6 +58,7 @@ router.get("/find/:jamName", auth, async (req, res) => {
 router.delete("/:jamName", auth, async (req, res) => {
   try {
     const jamName = req.params.jamName;
+    // assert req.user.id = jam.creator
     await Jam.deleteOne({ name: jamName });
     res.send("deleted");
   } catch (error) {
