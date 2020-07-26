@@ -1,14 +1,18 @@
 const mongoose = require("mongoose");
 const dbConfig = require("./config/db.config");
 
+const mongoURL =
+  process.env.MONGODB_URI ||
+  `mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`;
+
 mongoose
-  .connect(`mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`, {
+  .connect(mongoURL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Successfully connect to MongoDB.");
+    console.log("Successfully connected to MongoDB.");
   })
   .catch((err) => {
     console.error("Connection error", err);

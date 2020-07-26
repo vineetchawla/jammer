@@ -11,11 +11,10 @@ router.post("/create", auth, async (req, res) => {
   try {
     const jam = req.body;
     jam.creator = req.user.id;
-    console.log(jam);
 
     await Jam.create(jam);
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
 });
 
